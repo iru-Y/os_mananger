@@ -24,8 +24,8 @@ func NewCustomerController(service services.CustomerService) *CustomerController
 // @Accept json
 // @Produce json
 // @Param customer body schemas.CustomerRequest true "Customer Data"
-// @Success 201 {object} response.SuccessResponse
-// @Failure 400 {object} response.ErrorResponse
+// @Success 201 {object} SuccessResponse
+// @Failure 400 {object} ErrorResponse
 // @Router /customers [post]
 func (cc *CustomerController) CreateCustomer(c *gin.Context) {
 	var req schemas.CustomerRequest

@@ -1,0 +1,163 @@
+definitions:
+  controllers.ErrorResponse:
+    properties:
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  controllers.SuccessResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  schemas.CustomerRequest:
+    properties:
+      email:
+        type: string
+      full_address:
+        type: string
+      full_name:
+        type: string
+      phone:
+        type: string
+    type: object
+  schemas.CustomerResponse:
+    properties:
+      email:
+        type: string
+      full_address:
+        type: string
+      full_name:
+        type: string
+      id:
+        type: string
+      phone:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /customers:
+    get:
+      description: Retrieve a list of all customers
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/schemas.CustomerResponse'
+            type: array
+      summary: Get all customers
+      tags:
+      - Customers
+    post:
+      consumes:
+      - application/json
+      description: Create a new customer with the provided details
+      parameters:
+      - description: Customer Data
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.CustomerRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/controllers.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      summary: Create a new customer
+      tags:
+      - Customers
+  /customers/{id}:
+    delete:
+      description: Remove a customer using its ID
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.SuccessResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      summary: Delete a customer
+      tags:
+      - Customers
+    get:
+      description: Retrieve a customer using its ID
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schemas.CustomerResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      summary: Get a customer by ID
+      tags:
+      - Customers
+    put:
+      consumes:
+      - application/json
+      description: Update customer details using ID
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated Customer Data
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.CustomerRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      summary: Update a customer
+      tags:
+      - Customers
+swagger: "2.0"
